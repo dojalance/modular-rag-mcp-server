@@ -1,0 +1,26 @@
+{
+  "version": "rag-pdf-golden-v1",
+  "corpus_files": ["blogger_intro.pdf", "chinese_long_doc.pdf", "chinese_table_chart_doc.pdf", "chinese_technical_doc.pdf", "complex_technical_doc.pdf", "simple.pdf", "with_images.pdf", "r100-field-guide.pdf", "p200-field-guide.pdf", "service-policy.pdf"],
+  "generation_ids": ["r100_action", "p200_error", "policy_confirm", "table_bge", "english_overlap", "vision_hash", "cross_pdf", "missing_price"],
+  "cases": [
+    {"id":"r100_action","lang":"zh","query":"R100 路由器的 PON 灯持续红色。应先检查哪一个位置，若仍不恢复该安排哪类工程师？","answer":"先检查光纤接头是否松动，避免折弯光纤。若红灯持续，安排光网络工程师检查入户线路。","evidence":[{"source":"r100-field-guide.pdf","page":1,"anchor":"光纤接头是否松动"}]},
+    {"id":"p200_error","lang":"zh","query":"P200 出现 E03 表示什么，关机后该做哪两项处理？","answer":"E03 表示卡纸。关机后取出卡纸并检查纸盒导轨。","evidence":[{"source":"p200-field-guide.pdf","page":1,"anchor":"取出卡纸并检查纸盒导轨"}]},
+    {"id":"policy_confirm","lang":"zh","query":"演示售后政策允许先查哪些资料？什么情况下才会实际创建上门预约？","answer":"可先查手册和工程师档期。每次上门时间由用户确认后才写入预约。","evidence":[{"source":"service-policy.pdf","page":1,"anchor":"用户确认后写入预约"}]},
+    {"id":"table_bge","lang":"zh","query":"在《RAG 系统性能评测报告》的 Embedding 对比表里，BGE-large-zh 的维度和延迟分别是多少？","answer":"BGE-large-zh 是 1024 维，表中延迟 15 毫秒。","evidence":[{"source":"chinese_table_chart_doc.pdf","page":3,"anchor":"BGE-large-zh","also":"1024"}]},
+    {"id":"table_rrf","lang":"zh","query":"《RAG 系统性能评测报告》表 2 中混合检索 RRF 的 Precision@5 和平均时延是多少？","answer":"表 2 中混合检索 RRF 的 Precision@5 为 0.80，平均时延为 65 毫秒。","evidence":[{"source":"chinese_table_chart_doc.pdf","page":4,"anchor":"0.80","also":"0.84"}]},
+    {"id":"table_chunk","lang":"zh","query":"性能评测报告的推荐分块大小和重叠是多少？这一行的 Hit Rate 和 MRR 呢？","answer":"推荐 1000 字符、重叠 200 字符。对应 Hit Rate 0.82，MRR 0.76。","evidence":[{"source":"chinese_table_chart_doc.pdf","page":5,"anchor":"0.82","also":"0.76"}]},
+    {"id":"table_fusion_k","lang":"zh","query":"性能评测报告最后的配置汇总表给 retrieval.rrf_k 和 rerank.top_k 推荐了什么数？","answer":"retrieval.rrf_k 推荐 60，rerank.top_k 推荐 3。","evidence":[{"source":"chinese_table_chart_doc.pdf","page":6,"anchor":"rerank.top_k","also":"retrieval.rrf_k"}]},
+    {"id":"technical_ragas","lang":"zh","query":"《大语言模型应用开发技术指南》的评估指标表把 Faithfulness 用来衡量什么？","answer":"衡量生成答案是否忠实于检索上下文。","evidence":[{"source":"chinese_technical_doc.pdf","page":7,"anchor":"生成答案是否忠实于检索上下文"}]},
+    {"id":"technical_tool_names","lang":"zh","query":"在《大语言模型应用开发技术指南》里，项目 MCP Server 对外暴露哪三个工具？","answer":"query_knowledge_hub、list_collections 和 get_document_summary。","evidence":[{"source":"chinese_technical_doc.pdf","page":8,"anchor":"query_knowledge_hub","also":"get_document_summary"}]},
+    {"id":"technical_monitoring","lang":"zh","query":"《大语言模型应用开发技术指南》第七章提到用哪三种手段组成可视化监控？","answer":"JSON Lines 结构化日志、全链路 Trace 和 Streamlit Dashboard。","evidence":[{"source":"chinese_technical_doc.pdf","page":9,"anchor":"JSON Lines 格式","also":"Streamlit Dashboard"}]},
+    {"id":"long_ann","lang":"zh","query":"《大模型面试八股知识手册》里 ChromaDB 默认用什么近似最近邻算法？","answer":"HNSW。","evidence":[{"source":"chinese_long_doc.pdf","page":11,"anchor":"ChromaDB 默认使用 HNSW"}]},
+    {"id":"long_quant","lang":"zh","query":"《大模型面试八股知识手册》在推理优化一章说 4-bit 量化大约能减少多少模型体积？","answer":"模型大小通常能减少 75%。","evidence":[{"source":"chinese_long_doc.pdf","page":21,"anchor":"减少 75%"}]},
+    {"id":"english_overlap","lang":"en","query":"In the Advanced RAG System Technical Documentation, what is the default value for chunk_overlap?","answer":"The default chunk_overlap is 128 characters.","evidence":[{"source":"complex_technical_doc.pdf","page":4,"anchor":"chunk_overlap","also":"128"}]},
+    {"id":"vision_hash","lang":"en","query":"In the Advanced RAG technical documentation’s Visual Components Analysis, how are extracted image files named?","answer":"They use content-addressed filenames based on SHA256 hashes.","evidence":[{"source":"complex_technical_doc.pdf","page":7,"anchor":"content-addressed filenames"}]},
+    {"id":"english_retrieval","lang":"en","query":"Which two retrieval methods does the Advanced RAG technical documentation combine in its Retrieval Mechanisms section?","answer":"Dense vector similarity search and sparse BM25 ranking.","evidence":[{"source":"complex_technical_doc.pdf","page":6,"anchor":"dense vector similarity search","also":"sparse BM25 ranking"}]},
+    {"id":"english_simple","lang":"en","query":"What conversion library is the Simple Test PDF intended to verify?","answer":"MarkItDown.","evidence":[{"source":"simple.pdf","page":1,"anchor":"MarkItDown conversion works correctly"}]},
+    {"id":"cross_pdf","lang":"zh","query":"结合 R100 现场手册和演示售后政策，红灯持续由谁处理，创建上门预约之前还需要什么？","answer":"安排光网络工程师检查入户线路。上门时间须经用户确认后才能创建预约。","evidence":[{"source":"r100-field-guide.pdf","page":1,"anchor":"光网络工程师检查入户线路"},{"source":"service-policy.pdf","page":1,"anchor":"用户确认后写入预约"}]},
+    {"id":"missing_price","lang":"zh","query":"R100 路由器现场手册写明更换光模块报价是多少元吗？","answer":"资料未提供更换光模块的具体报价。","evidence":[]},
+    {"id":"missing_warranty","lang":"zh","query":"P200 打印机手册是否写明保修期是多少个月？","answer":"资料未提供 P200 的保修期限。","evidence":[]}
+  ]
+}
